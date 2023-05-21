@@ -1,5 +1,6 @@
 import { invoke, transformCallback } from '@tauri-apps/api/tauri';
 
+// Copyright 2019-2023 Tauri Programme within The Commons Conservancy
 class WebSocket {
     constructor(id, listeners) {
         this.id = id;
