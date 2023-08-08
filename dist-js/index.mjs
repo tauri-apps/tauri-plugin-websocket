@@ -10,6 +10,9 @@ class WebSocket {
         const handler = (message) => {
             listeners.forEach((l) => l(message));
         };
+        if (config === null || config === void 0 ? void 0 : config.headers) {
+            config.headers = Array.from(new Headers(config.headers).entries());
+        }
         return await invoke("plugin:websocket|connect", {
             url,
             callbackFunction: transformCallback(handler),
