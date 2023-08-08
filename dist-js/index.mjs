@@ -5,7 +5,7 @@ class WebSocket {
         this.id = id;
         this.listeners = listeners;
     }
-    static async connect(url, options) {
+    static async connect(url, config) {
         const listeners = [];
         const handler = (message) => {
             listeners.forEach((l) => l(message));
@@ -13,7 +13,7 @@ class WebSocket {
         return await invoke("plugin:websocket|connect", {
             url,
             callbackFunction: transformCallback(handler),
-            options,
+            config,
         }).then((id) => new WebSocket(id, listeners));
     }
     addListener(cb) {
