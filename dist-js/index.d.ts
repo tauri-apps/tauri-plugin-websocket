@@ -1,11 +1,3 @@
-declare global {
-    interface Window {
-        __TAURI_INVOKE__: <T>(cmd: string, args?: unknown) => Promise<T>;
-        __TAURI__: {
-            transformCallback: <T>(cb: (payload: T) => void) => number;
-        };
-    }
-}
 export interface MessageKind<T, D> {
     type: T;
     data: D;
