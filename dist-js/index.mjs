@@ -1,4 +1,4 @@
-import { Channel, invoke } from '@tauri-apps/api/tauri';
+import { Channel, invoke } from '@tauri-apps/api/primitives';
 
 // Copyright 2019-2023 Tauri Programme within The Commons Conservancy
 // SPDX-License-Identifier: Apache-2.0
@@ -8,7 +8,7 @@ class WebSocket {
         this.id = id;
         this.listeners = listeners;
     }
-    static async connect(url, options) {
+    static async connect(url, config) {
         const listeners = [];
         const onMessage = new Channel();
         onMessage.onmessage = (message) => {
@@ -17,7 +17,7 @@ class WebSocket {
         return await invoke("plugin:websocket|connect", {
             url,
             onMessage,
-            options,
+            config,
         }).then((id) => new WebSocket(id, listeners));
     }
     addListener(cb) {
