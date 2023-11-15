@@ -14,7 +14,7 @@ class WebSocket {
         onMessage.onmessage = (message) => {
             listeners.forEach((l) => l(message));
         };
-        if (config === null || config === void 0 ? void 0 : config.headers) {
+        if (config?.headers) {
             config.headers = Array.from(new Headers(config.headers).entries());
         }
         return await invoke("plugin:websocket|connect", {
@@ -57,4 +57,3 @@ class WebSocket {
 }
 
 export { WebSocket as default };
-//# sourceMappingURL=index.mjs.map
