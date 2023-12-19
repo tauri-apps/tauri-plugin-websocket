@@ -1,6 +1,6 @@
 'use strict';
 
-var primitives = require('@tauri-apps/api/primitives');
+var core = require('@tauri-apps/api/core');
 
 // Copyright 2019-2023 Tauri Programme within The Commons Conservancy
 // SPDX-License-Identifier: Apache-2.0
@@ -12,14 +12,14 @@ class WebSocket {
     }
     static async connect(url, config) {
         const listeners = [];
-        const onMessage = new primitives.Channel();
+        const onMessage = new core.Channel();
         onMessage.onmessage = (message) => {
             listeners.forEach((l) => l(message));
         };
         if (config?.headers) {
             config.headers = Array.from(new Headers(config.headers).entries());
         }
-        return await primitives.invoke("plugin:websocket|connect", {
+        return await core.invoke("plugin:websocket|connect", {
             url,
             onMessage,
             config,
@@ -42,7 +42,7 @@ class WebSocket {
         else {
             throw new Error("invalid `message` type, expected a `{ type: string, data: any }` object, a string or a numeric array");
         }
-        return await primitives.invoke("plugin:websocket|send", {
+        return await core.invoke("plugin:websocket|send", {
             id: this.id,
             message: m,
         });
