@@ -12,9 +12,11 @@ class WebSocket {
         const listeners = [];
         const onMessage = new Channel();
         onMessage.onmessage = (message) => {
-            listeners.forEach((l) => l(message));
+            listeners.forEach((l) => {
+                l(message);
+            });
         };
-        if (config?.headers) {
+        if (config?.headers != null) {
             config.headers = Array.from(new Headers(config.headers).entries());
         }
         return await invoke("plugin:websocket|connect", {
@@ -40,13 +42,13 @@ class WebSocket {
         else {
             throw new Error("invalid `message` type, expected a `{ type: string, data: any }` object, a string or a numeric array");
         }
-        return await invoke("plugin:websocket|send", {
+        await invoke("plugin:websocket|send", {
             id: this.id,
             message: m,
         });
     }
     async disconnect() {
-        return await this.send({
+        await this.send({
             type: "Close",
             data: {
                 code: 1000,
