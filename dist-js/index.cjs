@@ -18,7 +18,7 @@ class WebSocket {
                 l(message);
             });
         };
-        if (config?.headers != null) {
+        if (config?.headers) {
             config.headers = Array.from(new Headers(config.headers).entries());
         }
         return await core.invoke("plugin:websocket|connect", {
