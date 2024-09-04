@@ -19,10 +19,10 @@ class WebSocket {
         if (config?.headers) {
             config.headers = Array.from(new Headers(config.headers).entries());
         }
-        return await invoke("plugin:websocket|connect", {
+        return await invoke('plugin:websocket|connect', {
             url,
             onMessage,
-            config,
+            config
         }).then((id) => new WebSocket(id, listeners));
     }
     addListener(cb) {
@@ -30,30 +30,30 @@ class WebSocket {
     }
     async send(message) {
         let m;
-        if (typeof message === "string") {
-            m = { type: "Text", data: message };
+        if (typeof message === 'string') {
+            m = { type: 'Text', data: message };
         }
-        else if (typeof message === "object" && "type" in message) {
+        else if (typeof message === 'object' && 'type' in message) {
             m = message;
         }
         else if (Array.isArray(message)) {
-            m = { type: "Binary", data: message };
+            m = { type: 'Binary', data: message };
         }
         else {
-            throw new Error("invalid `message` type, expected a `{ type: string, data: any }` object, a string or a numeric array");
+            throw new Error('invalid `message` type, expected a `{ type: string, data: any }` object, a string or a numeric array');
         }
-        await invoke("plugin:websocket|send", {
+        await invoke('plugin:websocket|send', {
             id: this.id,
-            message: m,
+            message: m
         });
     }
     async disconnect() {
         await this.send({
-            type: "Close",
+            type: 'Close',
             data: {
                 code: 1000,
-                reason: "Disconnected by client",
-            },
+                reason: 'Disconnected by client'
+            }
         });
     }
 }

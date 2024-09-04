@@ -14,7 +14,7 @@ export interface CloseFrame {
     code: number;
     reason: string;
 }
-export type Message = MessageKind<"Text", string> | MessageKind<"Binary", number[]> | MessageKind<"Ping", number[]> | MessageKind<"Pong", number[]> | MessageKind<"Close", CloseFrame | null>;
+export type Message = MessageKind<'Text', string> | MessageKind<'Binary', number[]> | MessageKind<'Ping', number[]> | MessageKind<'Pong', number[]> | MessageKind<'Close', CloseFrame | null>;
 export default class WebSocket {
     id: number;
     private readonly listeners;
