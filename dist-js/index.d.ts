@@ -44,9 +44,9 @@ export type Message = MessageKind<'Text', string> | MessageKind<'Binary', number
 export default class WebSocket {
     id: number;
     private readonly listeners;
-    constructor(id: number, listeners: Array<(arg: Message) => void>);
+    constructor(id: number, listeners: Set<(arg: Message) => void>);
     static connect(url: string, config?: ConnectionConfig): Promise<WebSocket>;
-    addListener(cb: (arg: Message) => void): void;
+    addListener(cb: (arg: Message) => void): () => void;
     send(message: Message | string | number[]): Promise<void>;
     disconnect(): Promise<void>;
 }

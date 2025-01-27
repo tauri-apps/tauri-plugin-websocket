@@ -11,7 +11,7 @@ class WebSocket {
         this.listeners = listeners;
     }
     static async connect(url, config) {
-        const listeners = [];
+        const listeners = new Set();
         const onMessage = new core.Channel();
         onMessage.onmessage = (message) => {
             listeners.forEach((l) => {
@@ -28,7 +28,10 @@ class WebSocket {
         }).then((id) => new WebSocket(id, listeners));
     }
     addListener(cb) {
-        this.listeners.push(cb);
+        this.listeners.add(cb);
+        return () => {
+            this.listeners.delete(cb);
+        };
     }
     async send(message) {
         let m;
